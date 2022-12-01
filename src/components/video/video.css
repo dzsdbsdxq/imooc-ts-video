@@ -1,0 +1,178 @@
+.videoContainer{
+    position: relative;
+    overflow: hidden;
+    background-color: #000;
+}
+.videoContainer .videoContent{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.videoContainer .videoControls{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -60px;
+    height: 50px;
+    transition: 0.5s;
+    background-color: rgba(0,0,0,.8);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+.videoContainer .videoControls .videoProgress{
+    width:  100%;
+    height: 5px;
+    background-color: #222223;
+    position: relative;
+}
+.videoContainer .videoControls .videoProgress .videoProgressNow{
+    width: 0%;
+    height: 100%;
+    background-color: #ff6a03;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+.videoContainer .videoControls .videoProgress .videoProgressSuc{
+    width: 0%;
+    height: 100%;
+    background-color: #666;
+    pointer-events: none;
+}
+.videoContainer .videoControls .videoProgress .videoProgressBar{
+    height: 14px;
+    width: 14px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-40%,-40%);
+    cursor: pointer;
+}
+.videoContainer .videoControls .videoOptions{
+    width: 100%;
+    height: calc(100% - 5px);
+}
+.videoContainer .videoControls .videoOptions .videoPlay{
+    float: left;
+    display: block;
+    margin-left: 10px;
+    height: 100%;
+    width: 45px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    
+}
+.videoContainer .videoControls .videoOptions .videoPlay i.videoPlayIco{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAvlJREFUeF7lm7uvDUEcxz9fSp2/gJDoRCIKIdFQIApKhaiIQoMbN+K67kWEEKESjShERyLer3hf7wihIhJqnZaRidk4HmfOPmbPzuxOcqoz89vf9zPfnZ3Z2RE5ijFmLrAJmA8sBr4Az4EpSadyhIi2igZlZozZCpzw1PsGLJf0dFCsGP/3AjDGzAI+5Ux8XNJkzrrRVBsE4DSwsUC2j4DtKbmhLwBjzBzgQwHxvVWTcYMPwFrgfEkAtlkSbvABeAAsrQAga7pH0r4AcWoJ4QNwCVgd6KrRusEH4AywIRCAaN3gA3AS2BwYQDY2bJP0rIbYhUM2ASAqN4QA8B2YXhj9rwZ2bGjUDSEAlNT+R7PGnhSxAGjMDTEBaGRsiBGABfHQrSlqf1LECmBobogdQO1uSAFA5oYxSftDPHJ6Y6QEoBY3pAYguBtSBZC5wc4i7cvZ0iVlAEHc0AYAldzQFgCl3dA2ABbEG2BE0o08A0MbAWS670taNghCmwFY7bckrfBBaDsAq32dpAv9IHQBwEdggSS7h/lP6QIAK3qJpMddBrBFkn3L3VkHdB5Ap2+Bzg+CnX4Mdnoi9ELSoi5OhT8Do5LODRJv/2/bROi422v8kUd8mwC8dxsp1/IKz+q1wQHHnHhTVHzqDnjnhF8vIzx1BxyVtKOK8FQBvHW9fjOE+NRugSOSRkIJT8kB9iWn3QC5HVp8Cg44LGlnHcJjd8Brd6/fqVN8rA44JGm0buExOuCV6/W7wxIfkwMOSto1TOEhHWAXHtNKJv/S9fq9ku0rN2tyLXBA0u7KCioGaAKA/aDBHqux5xEaLz4AZ4H1gTPcL2kscMxK4XwArgArK0X/3dh+8Gh73X4AGVUZxpGZSUnjUanuScYHYBVwuULiT1yv/3dPrkLcoE19AIocmvw7qQlJe4NmWlOwvgDs9YwxF4E1Ba495VZutveTKIMAzAS+5lSSzGHJXj1eAM4Fs4GrwLw+INp7eDoTbIyZAUwAC93Pbj604vj8T+ErZFCEddP6AAAAAElFTkSuQmCC") no-repeat;
+    background-size: cover;
+}
+.videoContainer .videoControls .videoOptions .videoPlay i.videoPauseIco{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAMpJREFUeF7t0sENwCAMwMBm/6HpBs2jQvcxX0COYs+znHPO2d583c/M/Pl/m78Od3uAbTm3+S1AG9D8CtAGNL8CtAHNrwBtQPMrQBvQ/ArQBjS/ArQBza8AbUDzK0Ab0PwK0AY0vwK0Ac2vAG1A8ytAG9D8CtAGNL8CtAHNrwBtQPMrQBvQ/ArQBjS/ArQBza8AbUDzK0Ab0PwK0AY0vwK0Ac2vAG1A8ytAG9D8CtAGNL8CtAHNrwBtQPMrQBvQ/ArQBjS/ArQBzX8BsEkAX23i784AAAAASUVORK5CYII=") no-repeat;
+    background-size: cover;
+}
+.videoContainer .videoControls .videoOptions .videoTime{
+    float: left;
+    height: 100%;
+    color: #fff;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+.videoContainer .videoControls .videoOptions .videoFull{
+    display: flex;
+    height: 100%;
+    width: 45px;
+    float: right;
+    margin-right: 10px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.videoContainer .videoControls .videoOptions .videoFull i.videoFullIco{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAABMFJREFUeF7tm0nwHVMUxn9flRVlYcWGFStssFEWhoUFhYohRAkhE0kMSYgMSkIR8zzEPJdZKRQLC5KFshEbsmLFhrKwUKxUferS/9T939z3Xvfr26/9K303r6rf7TN85zt9+557WhzkQwe5/wwADAw4yBEYUmAUAWzvAC4Gjp+SJLuBOySF36lHITv2SAr+HDBGMsD2l8AZU1v+3417JZ3SRkYhO/ZJOqEpAG5jeHXvSMV1ZRcCAEnZYI9jQFsAAvVHUq8BAG1T8V9VpQHYLunOuk7MYp7tQPEPgWOzVO+AAbdJunsWzk3SYfvkyvmjR80twYAfgOMSBVsk3TvJwC7/t30a8AFw5Dg9JQA4EfgUOCZRtEnSA106OUq27bOA94EjkjnbwxIcX2sNQBBg+6QKhKMShRslPTxLEGyfA7wHHJro3SZpp+15D/EiAARFtk+tQEhRv1HS47MAwfYi4F3gkETfZkn3VXZ2A0Al/PQKhMMSA9ZJeqpLEGxfBryV0XGzpIfmrnfGgEjB2RUIaRSulfRsFyDYXga8nJG9XtKj8fXOAaiYcD7wUcaglZJeKAmC7VVADtjrJT2Z6poJABUIl1T5mNpwtaRXSoBgex3wREbWGkm7cjpmBkAFwhXA6xlDrpSUu14bF9sbgQczN6yS9PyYJbK7h+AIxJcDOdpfLin30JoIgu0twM7MxOWSXhonoAQD4u1wrV2d7TVAbhW4VFJYtmqPqg4QXmjSsUzSq5MEJbvIqbbDc7uw35rs6myvB9KXosZ1AdvfAOEdPx5LJb0xyfkqLWvZ30lJzPZm4J7I0FoMih3L1AGmTqVxgHUCQBWBQN+wQjRi0JyxUSks3L+raQrVYUmY0xkAdQ3oe94AQN8R6Fv/wIC+I9C3/oEBfUegb/0DA/qOQN/6Bwb0HYG+9Q8M6CoCthcDm4A/mmynk81QqD4fDnwiad5BRym7O2GA7SXAmy23w98nzRlbJcVb7CIYjDser1VQSK2wvRR4Lbleoh4QRM6r/Y9DoNpOBwaF0bpDpJYDY+r2O5pSuEqhdzJOZsvgmUDEDJqqJFarqhrl7AogV6Wd+gQ5k0pz6lZLem4CA2rZX7tDZNThYjDC9mrgmYxBGyQ90iZZbY8quY89dyhRFa6FoO21wAEnM8BaSU+3cT5i11VA7pBliaS3czpmAoDtG4DHMgaskPRiCecjEK4BcjIvlBRaY+aNzgGwvQHYfxobaa9dum4KkO2VQJr7fwMXSPosltcpALZvAe7POLBYUmha6GzYvg5IU+sv4DxJX0SMqZXCjR+CmZp/0BmicJGkjzvzPBI84rD09wqEr6oHc3kAbG8D7kqc/BMIefj5LJyPInwTkK4wvwLnStpbPAWAAxqPgID6Ikl7Zul8BELu5PhnIPQPfRfb1LpHKOPgL1Xkv+7D+QiEW4G0Ve/HtGGyNAA/VZH/tk/nIxC2AmObNksCEBomQ86Hd+3/zbB9e9ob2HUKTHK+ZLN02NW1at0vyYBJjsf/19pFjhNoO60LNNG/f+40AJT4YKIEACXs2C3pzBxydQoibT6ZKfG9QKB+WIKnTYF9oZ+48SczU/FsAd7USU1wIeEwALCQotWFrQMDukB1Icn8B9wTSV9+E9eCAAAAAElFTkSuQmCC") no-repeat;
+    background-size: cover;
+}
+.videoContainer .videoControls .videoOptions .videoVolume{
+    float: right;
+    height: 100%;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.videoContainer .videoControls .videoOptions .videoVolume i.videoVolumeIco{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAABQJJREFUeF7tmlmIHUUUhv8fnxSiefBBRUUIGMQFl0QxEjGiRhPRKHGPKxITUYOgGFRcQFER8+CGUYSQkIhrFDURQQ0YEDfEBVzAGFEUEUUjPgjCL/9Qd2hnqqrvTHfP7WZuvfRDneqq89WpU1WnDjHNC6e5/hgCGFrANCcwXALT3AAG4wQlnQZgHoANJL8d5CRM6RKQNAvAagBXB6U3kzx3WgCQtCoov09RYZK1TIKkMwDsC+Ajkp/1C7WWznOdSToFwC0A/B1XqgKQNBvAEwBOCj//BcDNJDf0A6ExAJI80zZ3z3yy1ABgLYDlkQ7uJnlXGYRGAEjyGrfyXvPZUgOAHwDsn+hkJUlbR3oCygY4kXpJxwdzP7vfdjUA+A7AQZn+ZpHckaqvxQIk7RkU91rfrV/lLVcDgNQS6A3jK5KHNAZA0sVB+SMmonhPtioA/0fSSwDOyfT/EMmbYvUjFiDJzsJme+RklKjSpg4AQYc7AeSc3nKST40dKyWdB+C5KkpUaVsXgADhDQALE+P5DcB8kl8W6w3gCwCHVlGiStuaAcwE8D0A+6RYWU/y8rEAVEWBqm3LAEh6AMCxAD6wpZL8ONenpCUANmdkLiA5avG2gNYCSIztfJLPl0BYA+DGhMyHJA10pLQWQHDMdmxjy18ATiX5fgqCpN0BvAXA55JYWUxyS1cBeNzbAoR/MxBODhBiIutIXtl2AGcBeCVj6sm9vddG0jMALoz8428Ah5Hc2dol4EFLWg/g0gyEeSTfy1iBzzYvJ+pvIPlI2wHsDcB7+zEJJTaSXFbiEL17zI3IbCW5qNUAghXMDxD2SCi6kOSbGSu4L9xMYyIzWw8gQPARN7YjuPpVkvYX0SLJgZJ3EtWXdAXASKgLwH4RRXaR3KtkGfwM4H+huCC/phMA+rCCObkToqStAE6PQHq2SwC8nXlbi5WlJF/MLINNAC6K1G/vEoCDAXydUPJ6ko9mADwG4NpI/Y4uAZgBYFdCydtJ3psBcA+A2yL1/3QJQO5ou4KkQ2OpneBxACsjlT91CYDjjfdP0ge8BmBxpO27XQLgK/DSBIAFJH1BSlmAX4oOj1Su6wQASVcBeDqhn5/CYkfdUXFJfwCInRXuaD0ASScA8D5uJxgrZevfM596K2z3SVCSL0NWfk5Cecf/5pL8NWP+ubvA7FZbQB/X4WiouwhDkiEdGAG0jeSC1gLoI1z/AkmH9JOl5B+X+QW5zQByN0BnlSwh6ZB+yvP7ie5tACdGBBxXPIDkn10E8LtfsUhuL5l9nwxvTcisJbnCda0F4MElwuJnkny9RPlFAHIy7Y8K9xSU5Bj/UQB8mnPw45sS5b3f2/SPTsg9SfKaXp0t4JNBPIqODqCmHKECML/6pJzjj+F9cGcRQM7Z5GDXUlf2NDaRTiTllPevriPpq/Fo6T2Pm5hjblP+SFoXgD6U30Jy3IWocoZISxIkymbeM+6n8XE7R2UAwVsPMkXmQQDR7I+CpS8juTG2nGoBUHBAg0iSymWJeWjZ43KtAAogpjJNLpcltorkwzlH2giAsCwGnSi5mqSTK7KlMQAFa2g6VdY5gt7Brgh9fuoH0X6yRC3fOIACiKaTpQ1iBsnPy2Z93DlgIg2qyEbS5bPvelX66rftlFlAcUAhtf04AJvKzvb9KjJZuYEAmOxgm2g3BNAE1S79c2gBXZqtJsY6tIAmqHbpn/8B9VA6scS0BJgAAAAASUVORK5CYII=") no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
+.videoContainer .videoControls .videoOptions .videoVolume i.videoVolumeCloseIco{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAmhJREFUeF7tmrFO5DAQhv8RPVyJRAkVnNB1iA4JGioEEhTU11Odjg56HoMOJBBPwCNQQQU0PAASL/CjQV4p53PiEBPWydjNauV1Nv/nf8Z2MgLjTYzrRwFQHGCcQAkB4waYThIkuQ1gDcC5iDxNcxK+NQRILgI4BvDbib4WkT0TAEgeOfHzVcEi8q2T4MPu/c9JbgH4C0A//2ujBUBSZ1rtrjNf20YJgKTGuIrXmG9sowJAct3ZfScmfNI/CgAkZ51wjfWZtuL1d4MHQPLQiV/9jPCsHEByH8AJgJUuIlLGTN0BJE+d+BQdncfmAOAOwK/OChIH5gCAiRqShhcA094KkywOSPJw4uCmEKisTgsAbgH8iR2f3YnzDMAmgGcANyKiiT7YJFcH1KxO9wAOROQhpIbkMoCLwHKuYy5DY3IGULc6BSE0iFfd9yLyc2gAXgH8qHHuPxAi4vUSbyIyNzQAVwB2G1LMBwTXH7J9dWjtk6ecQ0CP0jeR7fmjU7kUAbVTlzyzBaCCWlg7tgY1Js2P02iuq8BEWQKEqPhBAOjohFbiBwOgAkFzQlO86081L2jMB/cKfsxkHwJeKNgE0CEPjCcEOoifmKYVhKxDIEF8awjZAnCnOrsbIZLmt8LmD0Pmj8Ohx/V2Hoi43d/khY29R2KxY95X9We7DH6VwNh1CgCS5l+N2X456mVbe6/HY0ki1j+KAomYyFi/6RKZKhyzRVK+Q8yWyXlusFso6YGwWSobCAubxdKeG+yWy3sgNtz3l1jFR2wJTu3vvVw+9Qb7Hl8A9E049+sXB+Q+Q33fX3FA34Rzv/47UvdyUEvTwdwAAAAASUVORK5CYII=") no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
+.videoContainer .videoControls .videoOptions .videoVolume .videoVolProgress{
+    width: 100px;
+    height: 3px;
+    background-color: #222223;
+    position: relative;
+}
+.videoContainer .videoControls .videoOptions .videoVolume .videoVolProgress .videoVolProgressNow{
+    width: 50%;
+    height: 100%;
+    background-color: #ff6a03;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.videoContainer .videoControls .videoOptions .videoVolume .videoVolProgress .videoVolProgressBar{
+    height: 10px;
+    width: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-40%,-40%);
+    cursor: pointer;
+}
+.videoContainer .videoControls .videoOptions .videoVolume .videoVolProgress .videoVolProgressBar span{
+    color: #fff;
+    position: absolute;
+    font-size: 12px;
+    scale: 0.8;
+    top: -15px;
+    width: 25px;
+    left: -8px;
+    display: none;
+}
