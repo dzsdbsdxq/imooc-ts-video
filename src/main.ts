@@ -10,13 +10,13 @@ for(let i = 0 ; i < listItems.length ; i++ ){
             width:"700px",
             height:"456px",
             title:this.dataset.title,
-            pos:'center',
+            pos:'center',//1.center ,2.topLeft,3.topRight,4.leftBottom,5.rightBottom
             content:(contentElem)=>{
                 video({
                     url:this.dataset.url,
                     elem:contentElem,
                     autoplay:false,
-                    poster:"https://www.sztv.com.cn/huodong/lsj_spds/public/uploads/banner/20221128143813_298.jpg"
+                    poster:""
                 })
             }
         })
