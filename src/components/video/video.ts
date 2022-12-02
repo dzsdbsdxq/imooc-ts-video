@@ -42,7 +42,7 @@ class Video implements Icomponent {
                     <div class="${styles.videoProgressNow}"></div>
                     <div class="${styles.videoProgressSuc}"></div>
                     <div class="${styles.videoProgressBar}">
-                        <span></span>
+                        <span>00:00</span>
                     </div>
                 </div>
                 <div class="${styles.videoOptions}">
@@ -117,7 +117,9 @@ class Video implements Icomponent {
             (videoProgressElem[2] as HTMLElement).style.left = "0%"; 
         });
         videoContentElem.addEventListener("timeupdate",()=>{
-            (videoTimesElem[0] as HTMLElement).innerText = _this.second(Math.floor(videoContentElem.currentTime));
+            videoProgressTextTipsElem.innerText =
+            (videoTimesElem[0] as HTMLElement).innerText = 
+            _this.second(Math.floor(videoContentElem.currentTime));
             let currentProgress = Math.floor(
                 (videoContentElem.currentTime / videoContentElem.duration) * 100
             ) + "%";
@@ -147,7 +149,7 @@ class Video implements Icomponent {
                 (videoProgressElem[1] as HTMLElement).style.width =  scale+ "%"; 
                 this.style.left = (scale * 100) + "%"
                 videoContentElem.currentTime = scale * videoContentElem.duration;
-                videoProgressTextTipsElem.innerText =  _this.second(videoContentElem.currentTime);
+                videoProgressTextTipsElem.innerText =  _this.second(Math.floor(videoContentElem.currentTime));
             }
             document.onmouseup = () => {
                 videoProgressTextTipsElem.style.display = "none";
