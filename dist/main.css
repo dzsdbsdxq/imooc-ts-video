@@ -121,6 +121,17 @@
     transform: translate(-40%,-40%);
     cursor: pointer;
 }
+.videoContainer--utfzR .videoControls--dJqhu .videoProgress--NAnL_ .videoProgressBar--djdq6 span{
+    color: #fff;
+    position: absolute;
+    font-size: 12px;
+    scale: 0.8;
+    top: -23px;
+    left: -15px;
+    padding: 3px 6px;
+    background-color: rgba(0,0,0,.8);
+    display: none;
+}
 .videoContainer--utfzR .videoControls--dJqhu .videoOptions--oThKa{
     width: 100%;
     height: calc(100% - 5px);

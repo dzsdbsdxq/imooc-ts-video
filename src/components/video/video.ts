@@ -41,7 +41,9 @@ class Video implements Icomponent {
                 <div class="${styles.videoProgress}">
                     <div class="${styles.videoProgressNow}"></div>
                     <div class="${styles.videoProgressSuc}"></div>
-                    <div class="${styles.videoProgressBar}"></div>
+                    <div class="${styles.videoProgressBar}">
+                        <span></span>
+                    </div>
                 </div>
                 <div class="${styles.videoOptions}">
                     <div class="${styles.videoPlay}">
@@ -58,7 +60,7 @@ class Video implements Icomponent {
                         <div class="${styles.videoVolProgress}">
                             <div class="${styles.videoVolProgressNow}"></div>
                             <div class="${styles.videoVolProgressBar}">
-                                <span>0%</span>
+                                <span></span>
                             </div>
                         </div>
                     </div>
@@ -69,21 +71,9 @@ class Video implements Icomponent {
         this.settings.elem.appendChild(this.tempContainer) :
         document.querySelector(`${this.settings.elem}`).appendChild(this.tempContainer);
     }
-    second(second:number){
-        second = second || 0;
-        if (second === 0 || second === Infinity || second.toString() === 'NaN') {
-          return '00:00';
-        }
-        const add0 = (num) => (num < 10 ? '0' + num : '' + num);
-        const hour = Math.floor(second / 3600);
-        const min = Math.floor((second - hour * 3600) / 60);
-        const sec = Math.floor(second - hour * 3600 - min * 60);
-        return (hour > 0 ? [hour, min, sec] : [min, sec]).map(add0).join(':');
-    }
     handle(){
         let videoContentElem : HTMLVideoElement = this.tempContainer.querySelector(`.${styles.videoContent}`);
         let videoControlsElem :HTMLElement = this.tempContainer.querySelector(`.${styles.videoControls}`);
-
         let videoProgressElem = videoControlsElem.querySelectorAll(`.${styles.videoProgress} div`);
         let videoControlsOptionsElem = videoControlsElem.querySelector(`.${styles.videoOptions}`);
         let videoPlayElem = videoControlsOptionsElem.querySelector(`.${styles.videoPlay} i`);
@@ -92,6 +82,7 @@ class Video implements Icomponent {
         let videovolumeIcoElem = videoControlsOptionsElem.querySelector(`.${styles.videoVolume} i`);
         let videoVolProgressElems = videoControlsOptionsElem.querySelectorAll(`.${styles.videoVolProgress} div`);
         let videoVolProgressTextTipsElem = videoVolProgressElems[1].querySelector("span");
+        let videoProgressTextTipsElem = videoProgressElem[2].querySelector("span");
     
         //默认音量
         this.currentVolume = videoContentElem.volume = 0.5;
@@ -121,14 +112,14 @@ class Video implements Icomponent {
             this.settings.autoplay && videoContentElem.play();
         });
         videoContentElem.addEventListener("durationchange",()=>{
-            (videoTimesElem[1] as HTMLElement).innerText = this.second(videoContentElem.duration);
+            (videoTimesElem[1] as HTMLElement).innerText = second(videoContentElem.duration);
         });
         videoContentElem.addEventListener("ended",()=>{
             (videoProgressElem[0] as HTMLElement).style.width = "0%";
             (videoProgressElem[2] as HTMLElement).style.left = "0%"; 
         });
         videoContentElem.addEventListener("timeupdate",()=>{
-            (videoTimesElem[0] as HTMLElement).innerText = this.second(Math.floor(videoContentElem.currentTime));
+            (videoTimesElem[0] as HTMLElement).innerText = second(Math.floor(videoContentElem.currentTime));
             let currentProgress = Math.floor(
                 (videoContentElem.currentTime / videoContentElem.duration) * 100
             ) + "%";
@@ -149,6 +140,8 @@ class Video implements Icomponent {
         videoProgressElem[2].addEventListener("mousedown",function(event:MouseEvent){
             let downX = event.pageX;
             let downL = this.offsetLeft;
+            console.log(event.target["offsetLeft"],this.offsetLeft);
+            videoProgressTextTipsElem.style.display = "block";
             document.onmousemove = (ev:MouseEvent)=>{
                 let scale = (ev.pageX - downX + downL) / this.parentNode.offsetWidth;
                 scale = scale < 0 ? 0 :scale >1 ? 1:scale;
@@ -156,12 +149,14 @@ class Video implements Icomponent {
                 (videoProgressElem[1] as HTMLElement).style.width =  scale+ "%"; 
                 this.style.left = (scale * 100) + "%"
                 videoContentElem.currentTime = scale * videoContentElem.duration;
+                videoProgressTextTipsElem.innerText =  second(videoContentElem.currentTime);
             }
             document.onmouseup = () => {
+                videoProgressTextTipsElem.style.display = "none";
                 document.onmousemove = document.onmouseup = null;
             }
             event.preventDefault();
-        });
+        },false);
 
         videovolumeIcoElem.addEventListener("click",()=>{
             if(videoContentElem.volume <= 0){
@@ -219,6 +214,17 @@ class Video implements Icomponent {
                 videoContentElem.requestFullscreen()
             }
         });
+        function second(second:number){
+            second = second || 0;
+            if (second === 0 || second === Infinity || second.toString() === 'NaN') {
+              return '00:00';
+            }
+            const add0 = (num) => (num < 10 ? '0' + num : '' + num);
+            const hour = Math.floor(second / 3600);
+            const min = Math.floor((second - hour * 3600) / 60);
+            const sec = Math.floor(second - hour * 3600 - min * 60);
+            return (hour > 0 ? [hour, min, sec] : [min, sec]).map(add0).join(':');
+        }
     }
 }
 export default video;
