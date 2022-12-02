@@ -72,6 +72,7 @@ class Video implements Icomponent {
         document.querySelector(`${this.settings.elem}`).appendChild(this.tempContainer);
     }
     handle(){
+        let _this = this;
         let videoContentElem : HTMLVideoElement = this.tempContainer.querySelector(`.${styles.videoContent}`);
         let videoControlsElem :HTMLElement = this.tempContainer.querySelector(`.${styles.videoControls}`);
         let videoProgressElem = videoControlsElem.querySelectorAll(`.${styles.videoProgress} div`);
@@ -94,11 +95,8 @@ class Video implements Icomponent {
         this.tempContainer.addEventListener("mouseleave",function(){
             videoControlsElem.style.bottom = "-60px";
         });
-
-
-
         videoContentElem.addEventListener("canplay",()=>{
-            console.log("canplay");
+            //console.log("canplay");
         });
         videoContentElem.addEventListener("play",()=>{
             videoPlayElem.className = styles.videoPauseIco
@@ -112,14 +110,14 @@ class Video implements Icomponent {
             this.settings.autoplay && videoContentElem.play();
         });
         videoContentElem.addEventListener("durationchange",()=>{
-            (videoTimesElem[1] as HTMLElement).innerText = second(videoContentElem.duration);
+            (videoTimesElem[1] as HTMLElement).innerText = _this.second(videoContentElem.duration);
         });
         videoContentElem.addEventListener("ended",()=>{
             (videoProgressElem[0] as HTMLElement).style.width = "0%";
             (videoProgressElem[2] as HTMLElement).style.left = "0%"; 
         });
         videoContentElem.addEventListener("timeupdate",()=>{
-            (videoTimesElem[0] as HTMLElement).innerText = second(Math.floor(videoContentElem.currentTime));
+            (videoTimesElem[0] as HTMLElement).innerText = _this.second(Math.floor(videoContentElem.currentTime));
             let currentProgress = Math.floor(
                 (videoContentElem.currentTime / videoContentElem.duration) * 100
             ) + "%";
@@ -149,7 +147,7 @@ class Video implements Icomponent {
                 (videoProgressElem[1] as HTMLElement).style.width =  scale+ "%"; 
                 this.style.left = (scale * 100) + "%"
                 videoContentElem.currentTime = scale * videoContentElem.duration;
-                videoProgressTextTipsElem.innerText =  second(videoContentElem.currentTime);
+                videoProgressTextTipsElem.innerText =  _this.second(videoContentElem.currentTime);
             }
             document.onmouseup = () => {
                 videoProgressTextTipsElem.style.display = "none";
@@ -185,7 +183,7 @@ class Video implements Icomponent {
                 scale = scale < 0 ? 0 :scale >1 ? 1:scale;
                 (videoVolProgressElems[0] as HTMLElement).style.width =  (scale *100)+ "%"; 
                 this.style.left = (scale * 100) + "%"
-                this.currentVolume = videoContentElem.volume = scale;
+                _this.currentVolume = videoContentElem.volume = scale;
                 videoVolProgressTextTipsElem.innerText = Math.round(scale * 100) + "%";
                 videovolumeIcoElem.className = scale > 0 ? styles.videoVolumeIco:styles.videoVolumeCloseIco;
             }
@@ -214,17 +212,17 @@ class Video implements Icomponent {
                 videoContentElem.requestFullscreen()
             }
         });
-        function second(second:number){
-            second = second || 0;
-            if (second === 0 || second === Infinity || second.toString() === 'NaN') {
-              return '00:00';
-            }
-            const add0 = (num) => (num < 10 ? '0' + num : '' + num);
-            const hour = Math.floor(second / 3600);
-            const min = Math.floor((second - hour * 3600) / 60);
-            const sec = Math.floor(second - hour * 3600 - min * 60);
-            return (hour > 0 ? [hour, min, sec] : [min, sec]).map(add0).join(':');
+    }
+    second(second:number){
+        second = second || 0;
+        if (second === 0 || second === Infinity || second.toString() === 'NaN') {
+          return '00:00';
         }
+        const add0 = (num) => (num < 10 ? '0' + num : '' + num);
+        const hour = Math.floor(second / 3600);
+        const min = Math.floor((second - hour * 3600) / 60);
+        const sec = Math.floor(second - hour * 3600 - min * 60);
+        return (hour > 0 ? [hour, min, sec] : [min, sec]).map(add0).join(':');
     }
 }
 export default video;
